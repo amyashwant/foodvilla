@@ -1,7 +1,7 @@
 const Shimmer = () => {
   return (
     <div className="restaurant-list" data-testid="shimmer">
-        {Array(15).fill("").map((e,index)=>{
+        {Array(20).fill("").map((e,index)=>{
             return (  <div key={index} className="shimmer-card"></div> )
         })}
     

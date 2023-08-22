@@ -33179,7 +33179,7 @@ const useOnline = ()=>{
         setIsOnline(true);
     };
     const handleOffline = ()=>{
-        setIsOnline(true);
+        setIsOnline(false);
     };
     (0, _react.useEffect)(()=>{
         window.addEventListener("online", handleOnline);
@@ -35084,9 +35084,14 @@ const Body = ()=>{
     async function apicall() {
         const data = await fetch("https://corsproxy.io/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=21.1702401&lng=72.83106070000001&page_type=DESKTOP_WEB_LISTING");
         const json = await data.json();
-        setAllRestaurants(json?.data?.cards[2]?.data?.data?.cards);
-        setFilteredRestaurants(json?.data?.cards[2]?.data?.data?.cards);
-        console.log(json?.data?.cards[2]?.data?.data?.cards);
+        console.log(json);
+        console.log(json?.data?.cards[2]);
+        console.log(json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+        // setAllRestaurants(json?.data?.cards[2]?.data?.data?.cards);
+        // setFilteredRestaurants(json?.data?.cards[2]?.data?.data?.cards);
+        setAllRestaurants(json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+        setFilteredRestaurants(json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+    // console.log(json?.data?.cards[2]?.data?.data?.cards);
     }
     // let allVallues = useFetchRestaurant;
     // console.log(allVallues());
@@ -35150,15 +35155,20 @@ const Body = ()=>{
                 className: "restaurant-list",
                 "data-testid": "res-list",
                 children: filteredRestaurants.map((restaurant)=>{
+                    // return (
+                    //   <>
+                    //     <div key={restaurant.info.id}>{console.log(restaurant.info)}</div>
+                    //   </>
+                    // );
                     return /*#__PURE__*/ (0, _jsxRuntime.jsxs)(_reactRouterDom.Link, {
-                        to: "/restaurant/" + restaurant.data.id,
+                        to: "/restaurant/" + restaurant.info.id,
                         children: [
-                            console.log(restaurant),
+                            console.log(restaurant.info),
                             /*#__PURE__*/ (0, _jsxRuntime.jsx)(_RestaurantCard.RestaurantCard, {
-                                ...restaurant.data
+                                ...restaurant.info
                             })
                         ]
-                    }, restaurant.data.id);
+                    }, restaurant.info.id);
                 })
             })
         ]
@@ -35188,7 +35198,9 @@ Object.defineProperty(exports, "__esModule", {
 exports.RestaurantCard = void 0;
 var _Constant = require("4c8475e030c101ba");
 var _jsxRuntime = require("b81f6cfebb982a18");
-const RestaurantCard = ({ name , cuisine , area , cloudinaryImageId  })=>{
+const RestaurantCard = ({ name , cuisines , areaName , cloudinaryImageId  })=>{
+    const arr = cuisines;
+    console.log(arr);
     return /*#__PURE__*/ (0, _jsxRuntime.jsxs)("div", {
         className: "card",
         children: [
@@ -35204,17 +35216,17 @@ const RestaurantCard = ({ name , cuisine , area , cloudinaryImageId  })=>{
                     " "
                 ]
             }),
-            /*#__PURE__*/ (0, _jsxRuntime.jsxs)("h4", {
-                children: [
-                    " ",
-                    cuisine,
-                    " "
-                ]
+            /*#__PURE__*/ (0, _jsxRuntime.jsx)("h4", {
+                children: arr.map((a, i)=>{
+                    return /*#__PURE__*/ (0, _jsxRuntime.jsx)(_jsxRuntime.Fragment, {
+                        children: `${a} `
+                    });
+                })
             }),
             /*#__PURE__*/ (0, _jsxRuntime.jsxs)("h4", {
                 children: [
                     " ",
-                    area,
+                    areaName,
                     " "
                 ]
             })
@@ -37078,7 +37090,7 @@ const Shimmer = ()=>{
     return /*#__PURE__*/ (0, _jsxRuntime.jsx)("div", {
         className: "restaurant-list",
         "data-testid": "shimmer",
-        children: Array(15).fill("").map((e, index)=>{
+        children: Array(20).fill("").map((e, index)=>{
             return /*#__PURE__*/ (0, _jsxRuntime.jsx)("div", {
                 className: "shimmer-card"
             }, index);
@@ -37104,7 +37116,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.FilterData = FilterData;
 function FilterData(searchText, restaurants) {
     const filterData = restaurants.filter((restaurant)=>{
-        return restaurant.data.name.toLowerCase().includes(searchText.toLowerCase());
+        return restaurant.info.name.toLowerCase().includes(searchText.toLowerCase());
     });
     return filterData;
 }
@@ -37160,13 +37172,21 @@ const About = ()=>{
             clearInterval(timer);
         };
     }, []);
-    return /*#__PURE__*/ (0, _jsxRuntime.jsx)("div", {
-        children: /*#__PURE__*/ (0, _jsxRuntime.jsxs)("div", {
-            children: [
-                "this is About page_type",
-                /*#__PURE__*/ (0, _jsxRuntime.jsx)(_reactRouterDom.Outlet, {})
-            ]
-        })
+    return /*#__PURE__*/ (0, _jsxRuntime.jsxs)("div", {
+        children: [
+            /*#__PURE__*/ (0, _jsxRuntime.jsxs)("div", {
+                children: [
+                    "this is About page_type",
+                    /*#__PURE__*/ (0, _jsxRuntime.jsx)(_reactRouterDom.Outlet, {})
+                ]
+            }),
+            /*#__PURE__*/ (0, _jsxRuntime.jsx)(_reactRouterDom.Link, {
+                to: "/about/profile",
+                children: /*#__PURE__*/ (0, _jsxRuntime.jsx)("button", {
+                    children: "Profile"
+                })
+            })
+        ]
     });
 };
 _c = About;

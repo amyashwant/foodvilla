@@ -23,11 +23,20 @@ export const Body = () => {
       "https://corsproxy.io/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=21.1702401&lng=72.83106070000001&page_type=DESKTOP_WEB_LISTING"
     );
     const json = await data.json();
-
-    setAllRestaurants(json?.data?.cards[2]?.data?.data?.cards);
-
-    setFilteredRestaurants(json?.data?.cards[2]?.data?.data?.cards);
-    console.log(json?.data?.cards[2]?.data?.data?.cards);
+    console.log(json);
+    console.log(json?.data?.cards[2]);
+    console.log(
+      json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+    );
+    // setAllRestaurants(json?.data?.cards[2]?.data?.data?.cards);
+    // setFilteredRestaurants(json?.data?.cards[2]?.data?.data?.cards);
+    setAllRestaurants(
+      json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+    );
+    setFilteredRestaurants(
+      json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+    );
+    // console.log(json?.data?.cards[2]?.data?.data?.cards);
   }
 
   // let allVallues = useFetchRestaurant;
@@ -77,6 +86,7 @@ export const Body = () => {
           Search
         </button>
       </div>
+
       <input
         type="text"
         value={user.name}
@@ -102,13 +112,18 @@ export const Body = () => {
 
       <div className="restaurant-list" data-testid="res-list">
         {filteredRestaurants.map((restaurant) => {
+          // return (
+          //   <>
+          //     <div key={restaurant.info.id}>{console.log(restaurant.info)}</div>
+          //   </>
+          // );
           return (
             <Link
-              to={"/restaurant/" + restaurant.data.id}
-              key={restaurant.data.id}
+              to={"/restaurant/" + restaurant.info.id}
+              key={restaurant.info.id}
             >
-              {console.log(restaurant)}
-              <RestaurantCard {...restaurant.data} />
+              {console.log(restaurant.info)}
+              <RestaurantCard {...restaurant.info} />
             </Link>
           );
         })}

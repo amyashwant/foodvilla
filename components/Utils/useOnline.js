@@ -6,7 +6,7 @@ export const useOnline = () => {
     setIsOnline(true);
   };
   const handleOffline = () => {
-    setIsOnline(true);
+    setIsOnline(false);
   };
 
   useEffect(() => {

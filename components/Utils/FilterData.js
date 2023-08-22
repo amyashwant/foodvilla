@@ -3,7 +3,7 @@
 
 export function FilterData(searchText, restaurants) {
     const filterData = restaurants.filter((restaurant) => {
-      return restaurant.data.name
+      return restaurant.info.name
         .toLowerCase()
         .includes(searchText.toLowerCase());
     });
