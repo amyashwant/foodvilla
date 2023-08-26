@@ -123,6 +123,7 @@ export const Body = () => {
               key={restaurant.info.id}
             >
               {/* https://fooodvilla.netlify.app/api//dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=22.8235&lng=86.2304589&submitAction=ENTER&restaurantId=421811 */}
+              {/*   */}
               {console.log(restaurant.info)}
               <RestaurantCard {...restaurant.info} />
             </Link>
